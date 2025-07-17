@@ -1,14 +1,17 @@
-def plot_class_distribution(labels, class_names=None, title="Class Distribution", rotation=90):
-    class_indices = np.argmax(labels, axis=1) if labels.ndim > 1 else labels
-    unique_classes, counts = np.unique(class_indices, return_counts=True)
-    class_names = class_names or [str(cls) for cls in unique_classes]
-
-    plt.figure(figsize=(8, 6))
-    plt.bar(class_names, counts)
-    plt.xticks(rotation=rotation)
-    plt.title(title)
-    plt.ylabel("Frequency")
-    plt.xlabel("Class")
+def plot_label_distribution(df):
+    """
+    Plots the distribution of positive labels per disease.
+    
+    Args:
+        df (pd.DataFrame):
+    """
+    label_counts = df.drop(columns='Patient_ID').sum().sort_values()
+    plt.figure(figsize=(10, 6))
+    label_counts.plot(kind='barh', color='skyblue')
+    plt.title('Label Distribution per Disease', fontsize=16)
+    plt.xlabel('Number of Patients with Disease')
+    plt.ylabel('Disease')
+    plt.grid(axis='x', linestyle='--', alpha=0.6)
     plt.tight_layout()
     plt.show()
 
